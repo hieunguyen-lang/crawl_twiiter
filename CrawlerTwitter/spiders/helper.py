@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 __author__ = 'DuyLK'
 
 
@@ -115,21 +114,21 @@ class Helper:
             stripped = time_str + " " + date_str
             return datetime.strptime(stripped, "%H:%M %d/%m/%Y").strftime(self.DATETIME_FORMAT)
         except Exception:
-            print "[EXCEPTION] datetime converting exception, classic1 prototype datetime parsing"
+            print ("[EXCEPTION] datetime converting exception, classic1 prototype datetime parsing")
             return datetime.today().strftime(self.DATETIME_FORMAT)
 
     def format_time(self, input_str):
         #sample string : "2020-12-22T10:59:53+07:00"
         input_str = str(unidecode.unidecode(input_str)).strip()
-        print "------------------------------"
-        print "Time in: "+input_str
+        print ("------------------------------")
+        print ("Time in: "+input_str)
         try:
             date_rex = "\d+-\d+-\d+"
             time_rex = "\d+:\d+:\d+"
             date_str = re.findall(date_rex,input_str)[0]
             time_str = re.findall(time_rex,input_str)[0]
             stripped = time_str + " " + date_str
-            print "Time out: "+stripped
+            print ("Time out: "+stripped)
             return datetime.strptime(stripped, "%H:%M:%S %Y-%m-%d").strftime(self.DATETIME_FORMAT)
         except Exception:
             # print "[EXCEPTION] datetime converting exception, Not format: 2020-12-22T10:59:53+07:00 "
@@ -149,26 +148,26 @@ class Helper:
                     d = int(string)
                     stamp = str(datetime.now() + timedelta(days=-d))
                 if stamp != None:
-                    print stamp
+                    print (stamp)
                     date_rex = "\d+-\d+-\d+"
                     time_rex = "\d+:\d+:\d+"
                     date_str = re.findall(date_rex,stamp)[0]
                     time_str = re.findall(time_rex,stamp)[0]
                     stripped = time_str + " " + date_str
-                    print "Time out: "+datetime.strptime(stripped, "%H:%M:%S %Y-%m-%d").strftime(self.DATETIME_FORMAT)
+                    print ("Time out: "+datetime.strptime(stripped, "%H:%M:%S %Y-%m-%d").strftime(self.DATETIME_FORMAT))
                     return datetime.strptime(stripped, "%H:%M:%S %Y-%m-%d").strftime(self.DATETIME_FORMAT)
                 else:
-                    print "[EXCEPTION] datetime converting exception, Format Fail"
-                    print "Time out: "+datetime.today().strftime(self.DATETIME_FORMAT)
+                    print ("[EXCEPTION] datetime converting exception, Format Fail")
+                    print ("Time out: "+datetime.today().strftime(self.DATETIME_FORMAT))
                     return datetime.today().strftime(self.DATETIME_FORMAT)
             except Exception:
-                print "[EXCEPTION] datetime converting exception, None Imput String"
-                print "Time out: "+datetime.today().strftime(self.DATETIME_FORMAT)
+                print ("[EXCEPTION] datetime converting exception, None Input String")
+                print ("Time out: "+datetime.today().strftime(self.DATETIME_FORMAT))
                 return datetime.today().strftime(self.DATETIME_FORMAT)
 
     #Remove Key Limit
     def removeKeyLimit(self, key):
-        print "Remove Key Limit"
+        print ("Remove Key Limit")
         # print self.arrKeys
         # print self.arrKeysLimit
         if key in self.arrKeys:
@@ -220,7 +219,7 @@ class HelperKeys():
             print ('Key not in Array')
 
     def sendTelegram(self, urls=[]):
-        print '=>>>>>>>>>>>Send Telegram!'
+        print ('=>>>>>>>>>>>Send Telegram!')
         dataUrlText = ''
         for url in urls:
             dataUrlText += "\n -"+url +"\n"
@@ -228,17 +227,17 @@ class HelperKeys():
         bot_message = " \n Date: "+str(datetime.now())+" \n New item count: "+str(len(urls))+" \n List Urls New:"+dataUrlText+" \n --------------------------------------------------------------------"
         send_text = 'https://api.telegram.org/bot' + self.bot_token + '/sendMessage?chat_id=' + self.bot_chatID + '&parse_mode=Markdown&text=' + bot_message
         response = requests.get(send_text)
-        print '[Crawler Youtube Notification] =>>>>>>>>>>>Send Telegram Success!'
+        print ('[Crawler Youtube Notification] =>>>>>>>>>>>Send Telegram Success!')
 
     def sendMessageTelegram(self, message):
-        print '=>>>>>>>>>>>Send Message Telegram!'
+        print ('=>>>>>>>>>>>Send Message Telegram!')
         send_text = 'https://api.telegram.org/bot' + self.bot_token + '/sendMessage?chat_id=' + self.bot_chatID + '&parse_mode=Markdown&text=' + message
         response = requests.get(send_text)
-        print '[Crawler Youtube Notification] =>>>>>>>>>>>Send Telegram Success!'
+        print ('[Crawler Youtube Notification] =>>>>>>>>>>>Send Telegram Success!')
 
 
     def getDataFormUrl(self, url):
-        print '=>>>>>>>>>>>Get Data Form URL!'
+        print ('=>>>>>>>>>>>Get Data Form URL!')
         url_request = "http://123.30.186.133:5000/api/v1/resources?url="+url
         response = requests.get(url_request)
         return response.content

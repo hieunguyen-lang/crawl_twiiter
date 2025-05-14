@@ -1,14 +1,16 @@
 __author__ = 'DuyLK'
 # -*- coding: utf-8 -*-
 
-import ConfigParser
-from scrapy.conf import settings
+import configparser
+from scrapy.utils.project import get_project_settings
 from datetime import datetime
 from datetime import timedelta
 import time
 import mysql.connector
 import os
 from helper import Helper
+settings = get_project_settings()
+
 class DispatcherLibrary:
     def __init__(self, *args, **kwargs):
         self.process_id = os.getpid()
@@ -30,7 +32,7 @@ class DispatcherLibrary:
             cursor.execute(sql, params)
             # self.conn.commit()
         except mysql.connector.Error as e:
-            print 'exception generated during sql connection: ', e
+            print ('exception generated during sql connection: ', e)
             self.mysqConnect()
             cursor = self.conn.cursor()
             cursor.execute(sql, params)
@@ -43,25 +45,25 @@ class DispatcherLibrary:
             cursor.execute(sql)
             # self.conn.commit()
         except mysql.connector.Error as e:
-            print 'exception generated during sql connection: ', e
+            print ('exception generated during sql connection: ', e)
             self.mysqConnect()
             cursor = self.conn.cursor()
             cursor.execute(sql)
         return cursor
 
     def spider_open(self):
-        print spider_open(self)
+        print ('spider_open', self)
 
     def spider_close(self, reason):
-        print spider_close(self)
+        print ('spider_close', self)
 
     def getKeywords(self, id=''):
         if id != '':
-            print "Get ALL Keywords in Company"
+            print ("Get ALL Keywords in Company")
             sql = """SELECT id, keyword, campaign, company_id, brand_id, object_id, service_id, parent_object_id, parent_service_id, status FROM dlk_data_keywords WHERE company_id = '%s' and status = 1 """
             curr = self.mysqlQuery(sql % id)
         else:
-            print "Get ALL Keywords"
+            print ("Get ALL Keywords")
             sql = """SELECT id, keyword, campaign, company_id, brand_id, object_id, service_id, parent_object_id, parent_service_id, status FROM dlk_data_keywords WHERE status = 1 """
             curr = self.mysqlQuery_One(sql)
 
@@ -83,7 +85,7 @@ class DispatcherLibrary:
             sql = """UPDATE `dlk_data_by_ids` SET status = 1 WHERE `uid_post` = %s """
             curr = self.mysqlQuery(sql, (uid_post,))
             self.conn.commit()
-            print "UPDATE SUCCESS uid_post: " + uid_post
+            print ("UPDATE SUCCESS uid_post: " + uid_post)
         except Exception as e:
             print (e)
             print ("UPDATE ERROR")
@@ -112,7 +114,7 @@ class DispatcherLibrary:
             sql = """INSERT INTO dlk_data_logs(action, message) VALUE (%s, %s)"""
             curr = self.mysqlQuery(sql,(action, message))
             self.conn.commit()
-            print "=>>>>>>>>>>>>>>>>> Save Log"
+            print ("=>>>>>>>>>>>>> Save Log")
         except Exception as e:
             print (e)
             print ("[EXCEPTION] exception in save log")

@@ -8,18 +8,25 @@ import time
 import sys
 import redis
 import mysql.connector
-from CrawlerTwitter.items import CrawlerTwitterItem
+#from CrawlerTwitter.items import CrawlerTwitterItem
+# from .helper import Helper
 from scrapy import signals
-from .helper import Helper
 from scrapy.loader import ItemLoader
-from datetime import datetime, timedelta
+from scrapy.utils.project import get_project_settings
 from scrapy.loader import ItemLoader
 from scrapy import signals
 from pydispatch import dispatcher
-from mysql.connector import errorcode
-from dispatcherLib import DispatcherLibrary
-from CrawlerTwitter.proxy import *
 
+from datetime import datetime, timedelta
+from mysql.connector import errorcode
+# from dispatcherLib import DispatcherLibrary
+#from CrawlerTwitter.proxy import *
+settings = get_project_settings()
+from dotenv import load_dotenv
+import os
+
+# Load biến môi trường từ file .env
+load_dotenv()
 class TwitterLatestWebSpider(scrapy.Spider):
     name = "twitter_latest_web"
     handle_httpstatus_list = [403, 404, 200, 401, 429, 500, 504]
@@ -27,8 +34,8 @@ class TwitterLatestWebSpider(scrapy.Spider):
         # 'URLLENGTH_LIMIT': 20830,
         "CONCURRENT_REQUESTS": 5,
         "DOWNLOADER_MIDDLEWARES": {
-            'CrawlerTwitter.middlewares.RandomUserAgentMiddleware': 400,
-            'CrawlerTwitter.middlewares.RandomProxyBuyingTEST': 410,
+            'Crawl_Twitter_Py313.middlewares.RandomUserAgentMiddleware': 400,
+            # 'CrawlerTwitter.middlewares.RandomProxyBuyingTEST': 410,
         },
         "DOWNLOAD_TIMEOUT": 3,
         "DELAY": 1,
@@ -43,12 +50,12 @@ class TwitterLatestWebSpider(scrapy.Spider):
         self.created = datetime.today().strftime(self.DATETIME_FORMAT)
 
         #Redis Config
-        self.redis_db = redis.Redis(host=settings['REDIS_HOST'], port=settings['REDIS_PORT'], db=settings['REDIS_DB_ID'])
-        
-        self.conn = mysql.connector.connect(user="root",
-                                    passwd="vuduchong123",
-                                    db="monitaz_crawler_twitter",
-                                    host="192.168.1.11",
+        self.redis_db = redis.Redis(host=os.getenv('REDIS_HOST'), port=os.getenv('REDIS_PORT'), db=os.getenv('REDIS_DB_ID'))
+
+        self.conn = mysql.connector.connect(user=os.getenv('MYSQL_USERNAME'),
+                                    passwd=os.getenv('MYSQL_PASSWD'),
+                                    db=os.getenv('MYSQL_DB'),
+                                    host=os.getenv('MYSQL_HOST'),
                                     charset="utf8mb4", use_unicode=True)
         
         self.cursor = self.conn.cursor()
@@ -64,7 +71,7 @@ class TwitterLatestWebSpider(scrapy.Spider):
 
     def insert_data(self, data):
         insert_query = """
-            INSERT IGNORE INTO data_posts_extension(post_id, keyword, user_id, user_name, content_created, status, type, url_post, content, created_at) 
+            INSERT IGNORE INTO data_posts_twitter(post_id, keyword, user_id, user_name, content_created, status, type, url_post, content, created_at) 
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
         cursor = self.conn.cursor()
         cursor.executemany(insert_query, data)

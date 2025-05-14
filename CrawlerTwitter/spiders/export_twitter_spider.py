@@ -137,18 +137,18 @@ class TwitterSpider(scrapy.Spider):
             self.timeStart = str(datetime.utcnow().date()) + 'T'+ str(datetime.utcnow().hour) +':'+ str(datetime.utcnow().minute - 1) + ':00.000Z'
             self.timeEnd = str(datetime.utcnow().date() - timedelta(days=self.timeGet)) + 'T00:00:00.000Z'
 
-        print "==========================="
-        print self.timeStart
-        print self.timeEnd
-        print "==========================="
+        print ("===========================")
+        print (self.timeStart)
+        print (self.timeEnd)
+        print ("===========================")
 
         self.timeStart = '2021-09-21T23:59:59.000Z'
         self.timeEnd = '2021-09-18T00:00:00.000Z'
 
-        print "==========================="
-        print self.timeStart
-        print self.timeEnd
-        print "==========================="
+        print ("===========================")
+        print (self.timeStart)
+        print (self.timeEnd)
+        print ("===========================")
 
         dispatcher.connect(self.spider_closed, signals.spider_closed)
         dispatcher.connect(self.spider_opened, signals.spider_opened)
@@ -180,25 +180,25 @@ class TwitterSpider(scrapy.Spider):
 
         #API Error
         if response.status == 403 or response.status == 404:
-            print "[ERROR] 403 or 404 API: " + response.url
-            print self.countHeader()
+            print ("[ERROR] 403 or 404 API: " + response.url)
+            print (self.countHeader())
             if self.countHeader() > 0:
                 headers = self.getHeaderRandom()
                 if self.lang != '':
                     keyword = keyword+ " lang:"+self.lang
                 url = 'https://api.twitter.com/2/tweets/search/recent?query='+keyword+' lang:vi&start_time='+self.timeEnd+'&end_time='+self.timeStart+'&max_results='+self.maxResults+'&tweet.fields=public_metrics,author_id,created_at,entities,geo,in_reply_to_user_id,lang,possibly_sensitive,referenced_tweets,source'
-                print "=>>>>>>>>>>>> Again Request to Twitter <<<<<<<<<<<<<<="
-                yield scrapy.Request(url=newUrl, callback=self.parse, headers=headers, meta={'keyword': keyword})
+                print ("=>>>>>>>>>>>> Again Request to Twitter <<<<<<<<<<<<<<=")
+                yield scrapy.Request(url=url, callback=self.parse, headers=headers, meta={'keyword': keyword})
             else:
                 print('[Error] Headers 2 -> Empty!')
                 # Helper().sendMessageTelegram('=>>>>>>>>>> Twitter Headers Key -> Empty')
 
         #API Empty
         if response.status == 400:
-            print "[ERROR] 400 API: " + response.url
+            print ("[ERROR] 400 API: " + response.url)
 
         if response.status == 401:
-            print "[ERROR] 401 API: Unauthorized"
+            print ("[ERROR] 401 API: Unauthorized")
 
         if response.status == 200:
             self.countNewItem += 1
@@ -226,16 +226,16 @@ class TwitterSpider(scrapy.Spider):
             print('---------*0*----------')           
 
     def parseUser(self, response):
-        print "==="
-        print "[INFO] PARSER USER!"
-        print "==="
+        print ("===")
+        print ("[INFO] PARSER USER!")
+        print ("===")
         users = json.loads(response.body)
         #API Empty
         if response.status == 400:
-            print "[ERROR] 400 API: " + response.url
+            print ("[ERROR] 400 API: " + response.url)
 
         if response.status == 401:
-            print "[ERROR] 401 API: Unauthorized"
+            print ("[ERROR] 401 API: Unauthorized")
 
         if response.status == 200:
             datas = response.meta
@@ -256,9 +256,9 @@ class TwitterSpider(scrapy.Spider):
                 if data['lang'] == "vi":
                     id_post = int(data['id'])
                     if id_post in self.dataIDS:
-                        print "------------------------------"
-                        print "[INFO] Duplicate"
-                        print "------------------------------"
+                        print ("------------------------------")
+                        print ("[INFO] Duplicate")
+                        print ("------------------------------")
                     else:
                         self.dataIDS.append(int(data['id'])) 
                         if timeCreate.month == 8 and timeCreate.year == 2021:
@@ -276,24 +276,24 @@ class TwitterSpider(scrapy.Spider):
                                 timeFormat
                             ))
                         else:
-                            print timeFormat
-                            print url
-                            print "[INFO] NOT IN MONTH == 8"
+                            print (timeFormat)
+                            print (url)
+                            print ("[INFO] NOT IN MONTH == 8")
                 else:
-                    print "==="
-                    print "[INFO] LANGUAGE: "+data['lang']
-                    print "[INFO] NOT VIETNAMESE LANGUAGE"
-                    print "==="
+                    print ("===")
+                    print ("[INFO] LANGUAGE: "+data['lang'])
+                    print ("[INFO] NOT VIETNAMESE LANGUAGE")
+                    print ("===")
                     return ''
                 print('\n')
             else:
-                print "==="
-                print "[INFO] NOT REQUEST DATA USER!!!"
-                print "==="
+                print ("===")
+                print ("[INFO] NOT REQUEST DATA USER!!!")
+                print ("===")
         else:
-            print "==="
-            print "[INFO] STATUS NOT 2O0!!!"
-            print "==="                   
+            print ("===")
+            print ("[INFO] STATUS NOT 200!!!")
+            print ("===")
 
     #Get Key Random
     def getHeaderRandom(self):
@@ -325,8 +325,8 @@ class TwitterSpider(scrapy.Spider):
         keys = HelperKeys.ApiKeyHelper.key
         return len(keys)
 
-    def spider_opened(self,spider):
-        print "Spider - Open"
+    def spider_opened(self, spider):
+        print ("Spider Open")
 
     def spider_closed(self, spider, reason):
         print("NUMBER REQUESTS: "+ str(self.countRequest))
@@ -338,7 +338,7 @@ class TwitterSpider(scrapy.Spider):
         # START ROW EXCEL
         i = 3
         try:
-            print "[INFO] DATA TWITTER: "+str(len(self.dataTwitter))+"\n"
+            print ("[INFO] DATA TWITTER: "+str(len(self.dataTwitter))+"\n")
             # print self.dataTwitter
             count = 1
             for data in self.dataTwitter:
@@ -360,11 +360,11 @@ class TwitterSpider(scrapy.Spider):
 
                 if len(arr_keyword) > 0:
                     keyword_string = ', '.join(str(e) for e in arr_keyword)
-                    print keyword_string
+                    print (keyword_string)
                 try:
                     if keyword_string:
-                        print "[INFO] ID POST: "+idPost
-                        sheet["A" + str(i)].value = "TWITTER" 
+                        print ("[INFO] ID POST: "+idPost)
+                        sheet["A" + str(i)].value = "TWITTER"
                         sheet["B" + str(i)].value = name
                         sheet["C" + str(i)].value = timeCreated
                         sheet["D" + str(i)].value = description
@@ -379,9 +379,9 @@ class TwitterSpider(scrapy.Spider):
                         sheet["M" + str(i)].value = userID
                         i += 1
                     else:
-                        print "[INFO] NOT KEYWORD"
-                except Exception, e:
-                    print "ERROR EXPORT: " +str(e)
+                        print ("[INFO] NOT KEYWORD")
+                except Exception as e:
+                    print ("ERROR EXPORT: " + str(e))
 
             # SAVE TO FILE
             self.file_export = "Export_Youtube_"+self.keywords[0]+"_"+datetime.today().strftime("%d_%m_%Y")+"_V1.xlsx"
@@ -390,5 +390,5 @@ class TwitterSpider(scrapy.Spider):
             print("\n------------------------")
             print("SAVE FILE: " + self.file_name_export)
             print("\n------------------------")
-        except Exception, e:
-            print "ERROR: " +str(e)
+        except Exception as e:
+            print ("ERROR: " + str(e))
