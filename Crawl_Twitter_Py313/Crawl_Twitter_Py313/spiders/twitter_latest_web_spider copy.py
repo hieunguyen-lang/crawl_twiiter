@@ -27,8 +27,8 @@ import os
 
 # Load biến môi trường từ file .env
 load_dotenv()
-class TwitterLatestWebSpider(scrapy.Spider):
-    name = "twitter_latest_web"
+class TwitterLatestWeb1Spider(scrapy.Spider):
+    name = "twitter_latest_web1"
     handle_httpstatus_list = [403, 404, 200, 401, 429, 500, 504]
     custom_settings = {
         # 'URLLENGTH_LIMIT': 20830,
@@ -37,7 +37,7 @@ class TwitterLatestWebSpider(scrapy.Spider):
             'Crawl_Twitter_Py313.middlewares.RandomUserAgentMiddleware': 400,
             # 'CrawlerTwitter.middlewares.RandomProxyBuyingTEST': 410,
         },
-        "DOWNLOAD_TIMEOUT": 3,
+        # "DOWNLOAD_TIMEOUT": 3,
         # "DELAY": 1,
         "RETRY_ENABLED": False,
         "RETRY_TIMES": 1
@@ -80,66 +80,33 @@ class TwitterLatestWebSpider(scrapy.Spider):
 
     def start_requests(self):
         list_keyword = self.get_keyword()
-        
-        for row in list_keyword:
-            id, keyword = row
-            encoded_keyword = quote(keyword, safe=':/')
-            print(encoded_keyword)
-            url = 'https://x.com/i/api/graphql/z02aChbmdndP7_dy1d2VXA/SearchTimeline?variables=%7B%22rawQuery%22%3A%22{}%22%2C%22count%22%3A20%2C%22querySource%22%3A%22typed_query%22%2C%22product%22%3A%22Latest%22%7D&features=%7B%22rweb_video_screen_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Atrue%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Atrue%2C%22articles_preview_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22responsive_web_grok_show_grok_translated_post%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22responsive_web_grok_image_annotation_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%7D'.format(encoded_keyword)
+        a=0
+        for i in range(1,50):
+            a+=i
+            #encoded_keyword = quote(keyword, safe=':/')
+            url = 'https://api.twitter.com/graphql/BDo3929M41KOm8lE6VqX2g/SearchTimeline?variables=%7B%22includeTweetImpression%22%3Atrue%2C%22query_source%22%3A%22typeahead_click%22%2C%22includeHasBirdwatchNotes%22%3Afalse%2C%22includeEditPerspective%22%3Afalse%2C%22includeEditControl%22%3Atrue%2C%22query%22%3A%22banker%20Peter%20Sands%22%2C%22timeline_type%22%3A%22Latest%22%7D&features=%7B%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22grok_android_analyze_trend_fetch_enabled%22%3Afalse%2C%22super_follow_badge_privacy_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22super_follow_user_api_enabled%22%3Atrue%2C%22unified_cards_ad_metadata_container_dynamic_card_content_query_enabled%22%3Atrue%2C%22super_follow_tweet_api_enabled%22%3Atrue%2C%22articles_api_enabled%22%3Atrue%2C%22profile_label_improvements_pcf_label_in_profile_enabled%22%3Atrue%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22android_graphql_skip_api_media_color_palette%22%3Atrue%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22tweetypie_unmention_optimization_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22subscriptions_verification_info_enabled%22%3Atrue%2C%22blue_business_profile_image_shape_enabled%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22immersive_video_status_linkable_timestamps%22%3Atrue%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Atrue%2C%22super_follow_exclusive_tweet_notifications_enabled%22%3Atrue%7D'
 
             headers = {
                 "accept": "*/*",
                 "accept-language": "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5",
-                "authorization": "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA",
+                "authorization": 'OAuth realm="http://api.twitter.com/", oauth_version="1.0", oauth_token="1918725811877953536-5a8XfJh0UM8imSGWqu8VdVvbPuQutr", oauth_nonce="32448723943943412300748591506664", oauth_timestamp="1747216783", oauth_signature="62HSwHa6Ivr83JCcdJHaY%2B00ENA%3D", oauth_consumer_key="3nVuSoBZnx6U4vzUxf5w", oauth_signature_method="HMAC-SHA1"',
                 "content-type": "application/json",
-                "dnt": "1",
-                "priority": "u=1, i",
-                "referer": "https://x.com/search?q={}&src=typed_query&f=live".format(encoded_keyword),
-                "sec-ch-ua": "\"Google Chrome\";v=\"135\", \"Not-A.Brand\";v=\"8\", \"Chromium\";v=\"135\"",
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": "\"Windows\"",
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "same-origin",
-                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-                "x-client-transaction-id": "fXldL7VfbaV6rbF8LfLWPFW1I/aQyWlKLTt7RiFANx3NUG4KdRTYZLFcTX3VBdIQYXzSx345rBv2O+AJSqgpWafTGHX8fg",
-                "x-client-uuid": "96e77c85-8e89-4676-b3a2-169aede3afd8",
-                "x-csrf-token": "0364cb3c653dc08cbdc38bdb73e810e9d89dcc8bde0940cf7698190d05d3b05eb8ca1f10eb85f581ca9ba33d6b2a21865ba66356fdd755edfec4d013751e5d1a307bf3c6dc744a0e5aa216a6863cefff",
-                "x-twitter-active-user": "yes",
-                "x-twitter-auth-type": "OAuth2Session",
-                "x-twitter-client-language": "en"
             }
 
-            cookies = {
-                "_ga": "GA1.2.931018832.1736396588",
-                "_ga_KEWZ1G5MB3": "GS1.2.1736396588.1.0.1736396588.60.0.0",
-                "guest_id": "173691187390724780",
-                "night_mode": "2",
-                "guest_id_marketing": "v1%3A173691187390724780",
-                "guest_id_ads": "v1%3A173691187390724780",
-                "g_state": "{\"i_l\":0}",
-                "kdt": "xNAnvGRG00ld5bHzS52Bw0vjbzuJaI6v83rOU58n",
-                "__cf_bm": "12QDKLXslRqAVtSsNoHA5jlEE3W0EkvXgLCx6.jL7rU-1745490230-1.0.1.1-go9b2iVoWHeZcnoHvNXnKTMoUqof.RQY0TVOF1hZfFRs7aKwn5qkxBkeE39NHeCmuWUthwCjUtJAg9j39ra.EQRztzWB3xtoo8Q8ifpbbJU",
-                "personalization_id": "\"v1_tmFgnymYmrYHYlkn9dwn2g==\"",
-                "gt": "1915350966121226286",
-                "external_referer": "padhuUp37zjgzgv1mFWxJ12Ozwit7owX|0|8e8t2xd8A2w%3D",
-                "auth_token": "3e7a5a3085ef8d5a0088ebe840ecf271d7272d19",
-                "ct0": "0364cb3c653dc08cbdc38bdb73e810e9d89dcc8bde0940cf7698190d05d3b05eb8ca1f10eb85f581ca9ba33d6b2a21865ba66356fdd755edfec4d013751e5d1a307bf3c6dc744a0e5aa216a6863cefff",
-                "lang": "en",
-                "twid": "u%3D1915351017878925312"
-            }
+        
 
-            yield scrapy.Request(method="GET", url=url, headers=headers, cookies=cookies, meta={'keyword': keyword})
+            yield scrapy.Request(method="GET", url=url, headers=headers, meta={'keyword': "keyword"},dont_filter=True)
 
     def parse(self, response):
         self.countRequest += 1
 
         #API Error
         if response.status != 200:
-            print("[ERROR] API STATUS: " + str(response.status) + " - keyword: " + response.meta['keyword'])
+            print("[ERROR] API STATUS: " + str(response.status))
 
         
         if response.status == 200:
+            print("[INFO] API STATUS: " + str(response.status))
             self.countNewItem += 1 
             #Response Meta
             metas = response.meta

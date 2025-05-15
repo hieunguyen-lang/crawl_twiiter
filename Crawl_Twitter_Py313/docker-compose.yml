@@ -27,7 +27,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./backup_Crawler_Social.sql:/docker-entrypoint-initdb.d/backup_Crawler_Social.sql:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "hieunk", "-p123456"]
       interval: 10s
