@@ -39,7 +39,8 @@ class TwitterLatestMobileSpider(scrapy.Spider):
             # 'CrawlerTwitter.middlewares.RandomProxyBuyingTEST': 410,
         },
         "DOWNLOAD_TIMEOUT": 3,
-        "DELAY": 1,
+        "DELAY": 10,
+        "DOWNLOAD_DELAY" : 10,
         "RETRY_ENABLED": True,
         "RETRY_TIMES": 1
     }
@@ -138,31 +139,51 @@ class TwitterLatestMobileSpider(scrapy.Spider):
             res = json.loads(response.body)
             data_push  = []
             try:
-                if res["data"]["search"]["timeline_response"]["timeline"]["instructions"]["entries"]:
-                    for post in res["data"]["search"]["timeline_response"]["timeline"]["instructions"]["entries"]:
-                        if "content" in post:
+                if "data" in res :
+                    list_instruction= res["data"]["search"]["timeline_response"]["timeline"]["instructions"]
+                    list_posts =list_instruction[0]["entries"]
+                    
+                    for post in list_posts:
                             try:
-                                result = post["content"]["tweetResult"]["result"]
+                                # Kiểm tra content cấp 1
+                                if "content" not in post:
+                                    continue
+                                content_level1 = post["content"]
+
+                                # Kiểm tra content cấp 2
+                                if "content" not in content_level1:
+                                    continue
+                                content_level2 = content_level1["content"]
+
+                                if "tweetResult" not in content_level2:
+                                    continue
+                                result = content_level2["tweetResult"]["result"]
                                 data_auth = result["core"]["user_result"]["result"]["legacy"]
                                 data_post = result["legacy"]
-                                post_id = int(result['rest_id'])
-                                print("[INFO] POST ID: {}".format(post_id))
+                                if result['rest_id']:
+                                    post_id = int(result['rest_id'])
+                                
                                 user_id = data_post['user_id_str']
                                 user_name = data_auth["screen_name"]
                                 user_name_show = data_auth["name"]
                                 content_created = self.convert_id_to_created(post_id)
                                 url_post = "/{_user_id}/status/{_post_id}".format(_user_id=user_id, _post_id=post_id)
                                 content = data_post['full_text']
+                                            
                                 data_push.append((post_id, keyword, user_name, user_name_show, content_created, 0, 1, url_post, content, self.created))
+
+                    
                             except Exception as e:
                                 print("[ERROR] Error: {}".format(e))
                                 print("[INFO] Content: {}".format(post["content"]))
-             
+                                continue
+                                
                 else:
                     print("[INFO] No data")
             except Exception as e:
+                print("[ERROR] Error: {}".format(e))
                 print("[ERROR] Error Get data from response:")
-
+            print(len(data_push))
             if len(data_push) > 0:
                 print("[INFO] PUSH DATA MYSQL ({} ITEM)".format(len(data_push)))
                 self.insert_data(data_push)    
