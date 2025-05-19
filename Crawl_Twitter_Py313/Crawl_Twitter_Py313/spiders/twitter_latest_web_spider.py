@@ -85,7 +85,7 @@ class TwitterLatestWebSpider(scrapy.Spider):
             id, keyword = row
             encoded_keyword = quote(keyword, safe=':/')
             print(encoded_keyword)
-            url = 'https://x.com/i/api/graphql/KGwXtH8l4tGYoWMFJCh1ig/SearchTimeline?variables=%7B%22rawQuery%22%3A%22{}%22%2C%22count%22%3A20%2C%22querySource%22%3A%22typed_query%22%2C%22product%22%3A%22Latest%22%7D&features=%7B%22rweb_video_screen_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Atrue%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Atrue%2C%22articles_preview_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22responsive_web_grok_show_grok_translated_post%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22responsive_web_grok_image_annotation_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%7D'.format(encoded_keyword)
+            url = 'https://x.com/i/api/graphql/nKAncKPF1fV1xltvF3UUlw/SearchTimeline?variables=%7B%22rawQuery%22%3A%22{}%22%2C%22count%22%3A20%2C%22querySource%22%3A%22recent_search_click%22%2C%22product%22%3A%22Latest%22%7D&features=%7B%22rweb_video_screen_enabled%22%3Afalse%2C%22profile_label_improvements_pcf_label_in_post_enabled%22%3Atrue%2C%22rweb_tipjar_consumption_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22premium_content_api_read_enabled%22%3Afalse%2C%22communities_web_enable_tweet_community_results_fetch%22%3Atrue%2C%22c9s_tweet_anatomy_moderator_badge_enabled%22%3Atrue%2C%22responsive_web_grok_analyze_button_fetch_trends_enabled%22%3Afalse%2C%22responsive_web_grok_analyze_post_followups_enabled%22%3Atrue%2C%22responsive_web_jetfuel_frame%22%3Afalse%2C%22responsive_web_grok_share_attachment_enabled%22%3Atrue%2C%22articles_preview_enabled%22%3Atrue%2C%22responsive_web_edit_tweet_api_enabled%22%3Atrue%2C%22graphql_is_translatable_rweb_tweet_is_translatable_enabled%22%3Atrue%2C%22view_counts_everywhere_api_enabled%22%3Atrue%2C%22longform_notetweets_consumption_enabled%22%3Atrue%2C%22responsive_web_twitter_article_tweet_consumption_enabled%22%3Atrue%2C%22tweet_awards_web_tipping_enabled%22%3Afalse%2C%22responsive_web_grok_show_grok_translated_post%22%3Afalse%2C%22responsive_web_grok_analysis_button_from_backend%22%3Atrue%2C%22creator_subscriptions_quote_tweet_preview_enabled%22%3Afalse%2C%22freedom_of_speech_not_reach_fetch_enabled%22%3Atrue%2C%22standardized_nudges_misinfo%22%3Atrue%2C%22tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled%22%3Atrue%2C%22longform_notetweets_rich_text_read_enabled%22%3Atrue%2C%22longform_notetweets_inline_media_enabled%22%3Atrue%2C%22responsive_web_grok_image_annotation_enabled%22%3Atrue%2C%22responsive_web_enhance_cards_enabled%22%3Afalse%7D'.format(encoded_keyword)
 
             headers = {
                     "accept": "*/*",
@@ -102,31 +102,30 @@ class TwitterLatestWebSpider(scrapy.Spider):
                     "sec-fetch-mode": "cors",
                     "sec-fetch-site": "same-origin",
                     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-                    "x-client-transaction-id": "fXldL7VfbaV6rbF8LfLWPFW1I/aQyWlKLTt7RiFANx3NUG4KdRTYZLFcTX3VBdIQYXzSx345rBv2O+AJSqgpWafTGHX8fg",
-                    "x-client-uuid": "96e77c85-8e89-4676-b3a2-169aede3afd8",
-                    "x-csrf-token": "0364cb3c653dc08cbdc38bdb73e810e9d89dcc8bde0940cf7698190d05d3b05eb8ca1f10eb85f581ca9ba33d6b2a21865ba66356fdd755edfec4d013751e5d1a307bf3c6dc744a0e5aa216a6863cefff",
+                    "x-client-transaction-id": "e8kjs3ndx2o4RO52SwylI+EdQQQRlWhoDmGNqt8IwzYJKbkHI8IrAZguCeARWHN8aXQroHiJ+ghXOts/PBmSmVftUPz3eA",
+                    "x-client-uuid": "99c4895d-141a-48a8-8a5b-344e56cd76f1",
+                    "x-csrf-token": "9f5f4c079e7f555653aefe6496f10c467dc043c3784ce2814b2d7f6da9e8ba73f0e47f8f21e144a100ecf0dbe234b94ad600708a88b55df44acc044c9d87342b9ec046b62b7c7e49fbb4e4955abbbe0f",
                     "x-twitter-active-user": "yes",
                     "x-twitter-auth-type": "OAuth2Session",
                     "x-twitter-client-language": "en"
                 }
 
             cookies = {
-                    "_ga": "GA1.2.931018832.1736396588",
-                    "_ga_KEWZ1G5MB3": "GS1.2.1736396588.1.0.1736396588.60.0.0",
-                    "guest_id": "173691187390724780",
+                    "guest_id": "v1%3A174659106509384187",
                     "night_mode": "2",
-                    "guest_id_marketing": "v1%3A173691187390724780",
-                    "guest_id_ads": "v1%3A173691187390724780",
+                    "guest_id_marketing": "v1%3A174659106509384187",
+                    "guest_id_ads": "v1%3A174659106509384187",
                     "g_state": "{\"i_l\":0}",
-                    "kdt": "xNAnvGRG00ld5bHzS52Bw0vjbzuJaI6v83rOU58n",
-                    "__cf_bm": "12QDKLXslRqAVtSsNoHA5jlEE3W0EkvXgLCx6.jL7rU-1745490230-1.0.1.1-go9b2iVoWHeZcnoHvNXnKTMoUqof.RQY0TVOF1hZfFRs7aKwn5qkxBkeE39NHeCmuWUthwCjUtJAg9j39ra.EQRztzWB3xtoo8Q8ifpbbJU",
-                    "personalization_id": "\"v1_tmFgnymYmrYHYlkn9dwn2g==\"",
-                    "gt": "1915350966121226286",
-                    "external_referer": "padhuUp37zjgzgv1mFWxJ12Ozwit7owX|0|8e8t2xd8A2w%3D",
-                    "auth_token": "3e7a5a3085ef8d5a0088ebe840ecf271d7272d19",
-                    "ct0": "0364cb3c653dc08cbdc38bdb73e810e9d89dcc8bde0940cf7698190d05d3b05eb8ca1f10eb85f581ca9ba33d6b2a21865ba66356fdd755edfec4d013751e5d1a307bf3c6dc744a0e5aa216a6863cefff",
-                    "lang": "en",
-                    "twid": "u%3D1915351017878925312"
+                    "kdt": "PWBkW58Bkv24SyKFEmRBVqzYSsmRkxMXkO914nkw",
+                    "auth_token": "c63738f7fed343378353c20d5973fa768ff12f8d",
+                    "ct0": "9f5f4c079e7f555653aefe6496f10c467dc043c3784ce2814b2d7f6da9e8ba73f0e47f8f21e144a100ecf0dbe234b94ad600708a88b55df44acc044c9d87342b9ec046b62b7c7e49fbb4e4955abbbe0f",
+                    "twid": "u%3D1919969636952768512",
+                    "personalization_id": "v1_vso0/8LANYanmeekinOuww==",
+                    "lang": "vi",
+                    "_ga": "GA1.1.205388427.1746772689",
+                    "_ga_RJGMY4G45L": "GS2.1.s1747030841$o3$g0$t1747030844$j57$l0$h0",
+                    "external_referer": "8e8t2xd8A2w%3D|0|GlWr2u5wzZgGipXRLxmupQ%3D%3D",
+                    "__cf_bm": "OEthQEJK3arbEbrIImEDTAR2g905NralOiqCMQwn22I-1747628815-1.0.1.1-fQJtivTAecIefUPG5qhBDZgHTAQyrIFgeVwDvSZKlZuNak486NUi5dLtaMAlJNNmSFGBp17BH700e6QH2Un8Bi.ITZrTB1.DJMIvT.Y1P8Q"
                 }
 
             yield scrapy.Request(method="GET", url=url, headers=headers, cookies=cookies, meta={'keyword': keyword})
