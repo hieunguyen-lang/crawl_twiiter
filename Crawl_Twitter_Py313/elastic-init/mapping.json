@@ -1,0 +1,16 @@
+{
+  "mappings": {
+    "properties": {
+      "post_id":        { "type": "keyword" },
+      "keyword":        { "type": "text" },
+      "user_id":        { "type": "keyword" },
+      "user_name":      { "type": "text" },
+      "content_created":{ "type": "date", "format": "yyyy-MM-dd HH:mm:ss||strict_date_optional_time||epoch_millis"},
+      "status":         { "type": "keyword" },
+      "type":           { "type": "keyword" },
+      "url_post":       { "type": "keyword" },
+      "content":        { "type": "text" },
+      "created_at":     { "type": "date", "format": "yyyy-MM-dd HH:mm:ss||strict_date_optional_time||epoch_millis" }
+    }
+  }
+}

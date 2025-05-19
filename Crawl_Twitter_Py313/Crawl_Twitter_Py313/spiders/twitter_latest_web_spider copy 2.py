@@ -19,6 +19,8 @@ from pydispatch import dispatcher
 from urllib.parse import quote
 from datetime import datetime, timedelta
 from mysql.connector import errorcode
+from elasticsearch import Elasticsearch, helpers
+from elasticsearch.helpers import BulkIndexError
 # from dispatcherLib import DispatcherLibrary
 #from CrawlerTwitter.proxy import *
 settings = get_project_settings()
@@ -36,6 +38,7 @@ class TwitterLatestWeb2Spider(scrapy.Spider):
         "DOWNLOADER_MIDDLEWARES": {
             'Crawl_Twitter_Py313.middlewares.RandomUserAgentMiddleware': 400,
             # 'CrawlerTwitter.middlewares.RandomProxyBuyingTEST': 410,
+          
             'Crawl_Twitter_Py313.middlewares.Rotate_Trans_Clien_Id_SearchMiddleware': 410,
         },
         "DOWNLOAD_TIMEOUT": 3,
@@ -60,7 +63,7 @@ class TwitterLatestWeb2Spider(scrapy.Spider):
                                     charset="utf8mb4", use_unicode=True)
         
         self.cursor = self.conn.cursor()
-
+        self.es = Elasticsearch("http://localhost:9200")
         dispatcher.connect(self.spider_closed, signals.spider_closed)
         dispatcher.connect(self.spider_opened, signals.spider_opened)
 
@@ -78,7 +81,13 @@ class TwitterLatestWeb2Spider(scrapy.Spider):
         cursor.executemany(insert_query, data)
         self.conn.commit()
         print("[INFO] DONE {} RECORD".format(str(len(data))))
-
+    def insert_elasticsearch(self, documents):
+        try:
+            helpers.bulk(self.es, documents)
+        except BulkIndexError as e:
+            print(f"[!] Bulk insert failed: {len(e.errors)} document(s)")
+            for i, error in enumerate(e.errors[:10]):  # In tối đa 10 lỗi
+                print(f"  {i+1}. Error: {error}")
     def start_requests(self):
         list_keyword = self.get_keyword()
         
@@ -106,6 +115,7 @@ class TwitterLatestWeb2Spider(scrapy.Spider):
             keyword = response.meta['keyword']
             res = json.loads(response.body)
             data_push  = []
+            bulk_documents =[]
             if "data" in res:
                 data = res["data"]
                 if "search_by_raw_query" in data:
@@ -131,17 +141,35 @@ class TwitterLatestWeb2Spider(scrapy.Spider):
                                             content_created = self.convert_id_to_created(post_id)
                                             url_post = "/{_user_id}/status/{_post_id}".format(_user_id=user_id, _post_id=post_id)
                                             content = data_post['full_text']
-                                            data_push.append((post_id, keyword, user_name, user_name_show, content_created, 0, 1, url_post, content, self.created))
+                                            #data_push.append((post_id, keyword, user_name, user_name_show, content_created, 0, 1, url_post, content, self.created))
+                                            bulk_documents.append({
+                                                        "_index": "data_posts_twitter",
+                                                        "_id": post_id,
+                                                        "_source": {
+                                                            "post_id": post_id,
+                                                            "keyword": keyword,
+                                                            "user_id": user_name,
+                                                            "user_name": user_name_show,
+                                                            "content_created": content_created,
+                                                            "status": "active",
+                                                            "type": "twitter",
+                                                            "url_post": url_post,
+                                                            "content": content,
+                                                            "created_at": self.created
+                                                        }
+                                                    },
+                                                )
                                         except Exception as e:
                                             print("[ERROR] Error: {}".format(e))
                                             print("[INFO] Content: {}".format(post["content"]))
                 else:
                     print("[INFO] No data")
 
-            if len(data_push) > 0:
+            if len(bulk_documents) > 0:
                 print("[INFO] PUSH DATA MYSQL ({} ITEM)".format(len(data_push)))
-                self.insert_data(data_push)    
-                self.countNewItem += len(data_push)
+                #self.insert_data(data_push) 
+                self.insert_elasticsearch(bulk_documents)   
+                self.countNewItem += len(bulk_documents)
                 data_push = []
             else:
                 print("[INFO] No push data")
