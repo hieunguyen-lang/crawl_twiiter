@@ -1,2 +1,4 @@
 # crawl_twiiter
-docker exec mysql-crawler-social mysqldump -u hieunk -p123456 Crawler_Social > backup_Crawler_Social.sql
+docker exec mysql-crawler-social mysqldump -u root -proot Crawler_Social > backup_Crawler_Social.sql 
+
+http://localhost:5601/
