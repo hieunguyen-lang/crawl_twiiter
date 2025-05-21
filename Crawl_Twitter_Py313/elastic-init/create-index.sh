@@ -13,5 +13,5 @@ curl -X PUT "http://elasticsearch:9200/data_posts_twitter" \
      -d @/init/mapping.json
 curl -X PUT "http://elasticsearch:9200/data_posts_facebook" \
      -H "Content-Type: application/json" \
-     -d @/init/mapping.json
+     -d @/init/mapping_facebook.json
 echo "✅ Index created."

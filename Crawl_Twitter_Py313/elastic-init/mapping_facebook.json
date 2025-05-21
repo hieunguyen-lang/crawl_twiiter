@@ -1,0 +1,19 @@
+{
+  "mappings": {
+    "properties": {
+      "post_id":        { "type": "keyword" },
+      "group_id":       { "type": "keyword" },
+      "user_id":        { "type": "keyword" },
+      "user_name":      { "type": "text" },
+      "content_created":{ "type": "date", "format": "yyyy-MM-dd HH:mm:ss||strict_date_optional_time||epoch_millis"},
+      "status":         { "type": "keyword" },
+      "type":           { "type": "keyword" },
+      "url_post":       { "type": "keyword" },
+      "content":        { "type": "text" },
+      "created_at":     { "type": "date", "format": "yyyy-MM-dd HH:mm:ss||strict_date_optional_time||epoch_millis" },
+      "reaction_count": { "type": "integer" },
+      "comment_count":  { "type": "integer" },
+      "share_count":    { "type": "integer" }
+    }
+  }
+}
